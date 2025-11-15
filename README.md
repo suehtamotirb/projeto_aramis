@@ -71,10 +71,3 @@ npm run serve
 - Scenario: Buscar produto e filtrar resultados
 - Usa: Given, When, Then, And, But
 
-## Step Definitions
-
-Todos os step definitions estão implementados em JavaScript na pasta `cypress/support/step_definitions/`.
-
-## Páginas de Teste
-
-As páginas HTML de teste estão localizadas em `cypress/fixtures/test-pages/` e são servidas pelo servidor HTTP local na porta 8080.
