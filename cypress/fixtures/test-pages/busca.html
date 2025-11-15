@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Busca</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .search-form {
+        margin: 20px 0;
+      }
+      input[type="search"] {
+        padding: 10px;
+        width: 300px;
+      }
+      button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      .product-list {
+        margin-top: 30px;
+      }
+      .product-item {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .price {
+        font-weight: bold;
+        color: green;
+      }
+      .filter-select {
+        margin: 20px 0;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Busca de Produtos</h1>
+    <form class="search-form" id="searchForm">
+      <input type="search" placeholder="Digite o termo de busca..." />
+      <button type="submit">Buscar</button>
+    </form>
+
+    <select class="filter-select" id="filterSelect">
+      <option value="">Selecione um filtro</option>
+      <option value="price-asc">Preço: Menor para Maior</option>
+      <option value="price-desc">Preço: Maior para Menor</option>
+    </select>
+
+    <div class="product-list" id="productList" style="display: none">
+      <div class="product-item" data-price="500.00">
+        <h3>Smartphone Modelo A</h3>
+        <p class="price">R$ 500,00</p>
+      </div>
+      <div class="product-item" data-price="800.00">
+        <h3>Smartphone Modelo B</h3>
+        <p class="price">R$ 800,00</p>
+      </div>
+      <div class="product-item" data-price="1200.00">
+        <h3>Smartphone Modelo C</h3>
+        <p class="price">R$ 1.200,00</p>
+      </div>
+      <div class="product-item" data-price="1500.00">
+        <h3>Smartphone Modelo D</h3>
+        <p class="price">R$ 1.500,00</p>
+      </div>
+      <div class="product-item" data-price="2000.00">
+        <h3>Smartphone Modelo E</h3>
+        <p class="price">R$ 2.000,00</p>
+      </div>
+    </div>
+
+    <script>
+      document
+        .getElementById("searchForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          document.getElementById("productList").style.display = "block";
+        });
+
+      document
+        .getElementById("filterSelect")
+        .addEventListener("change", function (e) {
+          if (e.target.value === "price-asc") {
+            sortProducts(true);
+          } else if (e.target.value === "price-desc") {
+            sortProducts(false);
+          }
+        });
+
+      function sortProducts(ascending) {
+        const productList = document.getElementById("productList");
+        const products = Array.from(
+          productList.querySelectorAll(".product-item")
+        );
+
+        products.sort((a, b) => {
+          const priceA = parseFloat(a.dataset.price);
+          const priceB = parseFloat(b.dataset.price);
+          return ascending ? priceA - priceB : priceB - priceA;
+        });
+
+        products.forEach((product) => productList.appendChild(product));
+      }
+    </script>
+  </body>
+</html>

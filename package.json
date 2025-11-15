@@ -1,0 +1,24 @@
+{
+  "name": "cucumber-cypress-project",
+  "version": "1.0.0",
+  "description": "Projeto com Cucumber e Cypress",
+  "main": "index.js",
+  "scripts": {
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "test": "cypress run",
+    "serve": "npx http-server -p 8080 -c-1"
+  },
+  "keywords": [
+    "cypress",
+    "cucumber",
+    "bdd"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^13.6.0",
+    "@badeball/cypress-cucumber-preprocessor": "^20.0.0",
+    "@bahmutov/cypress-esbuild-preprocessor": "^2.2.0"
+  }
+}

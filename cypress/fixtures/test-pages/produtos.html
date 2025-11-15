@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Produtos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 50px auto;
+        padding: 20px;
+      }
+      .product {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin: 10px;
+        display: inline-block;
+        width: 250px;
+      }
+      .cart {
+        position: fixed;
+        top: 10px;
+        right: 10px;
+        background: #f0f0f0;
+        padding: 15px;
+        border: 1px solid #ddd;
+      }
+      .cart-count {
+        font-weight: bold;
+      }
+      .cart-total {
+        font-weight: bold;
+        color: green;
+      }
+      button {
+        padding: 8px 15px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      button.remove {
+        background-color: #f44336;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="cart">
+      <h3>Carrinho</h3>
+      <div class="cart-count">0 itens</div>
+      <div class="cart-total">Total: R$ 0,00</div>
+      <div id="cart-items"></div>
+    </div>
+
+    <h1>Produtos</h1>
+    <div class="product" data-product="Notebook" data-price="1200.00">
+      <h3>Notebook</h3>
+      <p>R$ 1.200,00</p>
+      <button onclick="addToCart('Notebook', 1200.00)">Adicionar</button>
+    </div>
+    <div class="product" data-product="Mouse" data-price="300.00">
+      <h3>Mouse</h3>
+      <p>R$ 300,00</p>
+      <button onclick="addToCart('Mouse', 300.00)">Adicionar</button>
+    </div>
+
+    <script>
+      let cart = [];
+
+      function addToCart(product, price) {
+        cart.push({ product, price });
+        updateCart();
+      }
+
+      function removeFromCart(product) {
+        cart = cart.filter((item) => item.product !== product);
+        updateCart();
+      }
+
+      function updateCart() {
+        const count = cart.length;
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+
+        document.querySelector(".cart-count").textContent = count + " itens";
+        document.querySelector(".cart-total").textContent =
+          "Total: R$ " + total.toFixed(2).replace(".", ",");
+
+        const cartItems = document.getElementById("cart-items");
+        cartItems.innerHTML = cart
+          .map(
+            (item) =>
+              `<div>${item.product} - R$ ${item.price
+                .toFixed(2)
+                .replace(".", ",")} 
+                <button class="remove" onclick="removeFromCart('${
+                  item.product
+                }')">Remover</button></div>`
+          )
+          .join("");
+      }
+    </script>
+  </body>
+</html>
