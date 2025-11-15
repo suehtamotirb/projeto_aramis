@@ -6,11 +6,18 @@ Given("que estou na página de login", () => {
 
 When("eu preencho o campo {string} com {string}", (campo, valor) => {
   if (campo === "email") {
-    cy.get('input[type="email"]').type(valor);
+    cy.get('input[type="email"]').focus().clear();
+    // Pausa o teste para permitir preenchimento manual
+    // Clique em "Resume" no Cypress quando terminar de preencher
+    cy.pause();
   } else if (campo === "senha") {
-    cy.get('input[type="password"]').type(valor);
+    cy.get('input[type="password"]').focus().clear();
+    // Pausa o teste para permitir preenchimento manual
+    // Clique em "Resume" no Cypress quando terminar de preencher
+    cy.pause();
   } else {
-    cy.get(`input[name="${campo}"]`).type(valor);
+    cy.get(`input[name="${campo}"]`).focus().clear();
+    cy.pause();
   }
 });
 

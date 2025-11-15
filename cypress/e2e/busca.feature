@@ -14,3 +14,9 @@ Feature: Busca de Produtos
     And o primeiro produto deve ter preço menor que o último
     But nenhum produto deve estar fora de ordem
 
+  Scenario: Buscar produto que não existe
+    Given que estou na página inicial
+    When eu digito "tablet" no campo de busca
+    And eu clico no botão de buscar
+    Then eu devo ver a mensagem "Esse produto não existe"
+

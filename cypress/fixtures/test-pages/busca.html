@@ -41,6 +41,15 @@
         margin: 20px 0;
         padding: 8px;
       }
+      .error-message {
+        color: red;
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+      .no-results {
+        margin-top: 20px;
+      }
     </style>
   </head>
   <body>
@@ -79,12 +88,50 @@
       </div>
     </div>
 
+    <div class="no-results" id="noResults" style="display: none">
+      <div class="error-message" id="errorMessage"></div>
+    </div>
+
     <script>
+      // Lista de produtos disponíveis
+      const produtosDisponiveis = [
+        "smartphone",
+        "smartphone modelo a",
+        "smartphone modelo b",
+        "smartphone modelo c",
+        "smartphone modelo d",
+        "smartphone modelo e",
+      ];
+
       document
         .getElementById("searchForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-          document.getElementById("productList").style.display = "block";
+          const termoBusca = document
+            .querySelector('input[type="search"]')
+            .value.trim()
+            .toLowerCase();
+          const productList = document.getElementById("productList");
+          const noResults = document.getElementById("noResults");
+          const errorMessage = document.getElementById("errorMessage");
+
+          // Esconder ambos inicialmente
+          productList.style.display = "none";
+          noResults.style.display = "none";
+
+          // Verificar se o termo de busca existe na lista
+          const produtoEncontrado = produtosDisponiveis.some((produto) =>
+            produto.includes(termoBusca)
+          );
+
+          if (produtoEncontrado) {
+            // Mostrar lista de produtos
+            productList.style.display = "block";
+          } else {
+            // Mostrar mensagem de erro
+            errorMessage.textContent = "Esse produto não existe";
+            noResults.style.display = "block";
+          }
         });
 
       document

@@ -64,15 +64,38 @@
         .getElementById("loginForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-          const email = document.getElementById("email").value;
-          const senha = document.getElementById("senha").value;
+          // Remove espaços em branco do início e fim
+          const email = document.getElementById("email").value.trim();
+          const senha = document.getElementById("senha").value.trim();
 
+          // Debug no console
+          console.log("=== DEBUG LOGIN ===");
+          console.log("Email digitado: '" + email + "'");
+          console.log("Email esperado: 'usuario@exemplo.com'");
+          console.log("Email correto?", email === "usuario@exemplo.com");
+          console.log("Senha digitada: '" + senha + "'");
+          console.log("Senha esperada: 'senha123'");
+          console.log("Senha correta?", senha === "senha123");
+          console.log("==================");
+
+          // Validação com trim para evitar problemas com espaços
           if (email === "usuario@exemplo.com" && senha === "senha123") {
             window.location.href = "/cypress/fixtures/test-pages/index.html";
           } else {
             const messageDiv = document.getElementById("message");
+            let errorMsg = "Credenciais inválidas";
+
+            // Mensagens mais específicas
+            if (email !== "usuario@exemplo.com" && senha !== "senha123") {
+              errorMsg = "Email e senha incorretos";
+            } else if (email !== "usuario@exemplo.com") {
+              errorMsg = "Email incorreto. Use: usuario@exemplo.com";
+            } else if (senha !== "senha123") {
+              errorMsg = "Senha incorreta. Use: senha123";
+            }
+
             messageDiv.innerHTML =
-              '<div class="error-message">Credenciais inválidas</div>';
+              '<div class="error-message">' + errorMsg + "</div>";
           }
         });
     </script>

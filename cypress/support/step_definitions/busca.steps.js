@@ -77,3 +77,7 @@ Then("nenhum produto deve estar fora de ordem", () => {
     expect(prices).to.deep.equal(sortedPrices);
   });
 });
+
+Then("eu devo ver a mensagem {string}", (mensagem) => {
+  cy.get(".error-message").should("be.visible").and("contain", mensagem);
+});
