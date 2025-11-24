@@ -6,32 +6,26 @@ Given("que estou na página de login", () => {
 
 When("eu preencho o campo {string} com {string}", (campo, valor) => {
   if (campo === "email") {
-    cy.get('input[type="email"]').focus().clear();
-    // Pausa o teste para permitir preenchimento manual
-    // Clique em "Resume" no Cypress quando terminar de preencher
+    // Foca no campo de email e pausa para permitir preenchimento manual
+    cy.get('input[type="email"]').should("be.visible").focus();
+    // Pausa o teste - o usuário deve digitar o email manualmente
+    // Clique em "Resume" no Cypress quando terminar de digitar
     cy.pause();
   } else if (campo === "senha") {
-    cy.get('input[type="password"]').focus().clear();
-    // Pausa o teste para permitir preenchimento manual
-    // Clique em "Resume" no Cypress quando terminar de preencher
+    // Foca no campo de senha e pausa para permitir preenchimento manual
+    cy.get('input[type="password"]').should("be.visible").focus();
+    // Pausa o teste - o usuário deve digitar a senha manualmente
+    // Clique em "Resume" no Cypress quando terminar de digitar
     cy.pause();
   } else {
-    cy.get(`input[name="${campo}"]`).focus().clear();
+    cy.get(`input[name="${campo}"]`).should("be.visible").focus();
     cy.pause();
   }
 });
 
-When("eu clico no botão {string}", (botao) => {
-  cy.contains("button", botao).click();
-});
-
 Then("eu devo ser redirecionado para a página inicial", () => {
-  cy.url().should("include", "index.html");
-  cy.visit("/cypress/fixtures/test-pages/index.html");
-});
-
-Then("eu devo ver a mensagem {string}", (mensagem) => {
-  cy.contains(mensagem).should("be.visible");
+  // Aguardar o redirecionamento acontecer
+  cy.url({ timeout: 10000 }).should("include", "index.html");
 });
 
 Then("eu não devo ver a mensagem de erro", () => {

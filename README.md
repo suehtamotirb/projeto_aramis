@@ -1,6 +1,6 @@
-# Projeto Cucumber + Cypress
+# Sistema de Compra e Venda de Ingressos de Cinema
 
-Este projeto contém testes BDD (Behavior-Driven Development) usando Cucumber e Cypress com JavaScript. O projeto inclui 3 features completas com cenários que demonstram o uso de Given, When, Then, And e But.
+Este projeto contém testes BDD (Behavior-Driven Development) usando Cucumber e Cypress com JavaScript para um sistema de compra e venda de ingressos de cinema. O projeto inclui 3 features completas com cenários que demonstram o uso de Given, When, Then, And e But.
 
 ## Estrutura do Projeto
 
@@ -15,7 +15,7 @@ Este projeto contém testes BDD (Behavior-Driven Development) usando Cucumber e 
 │   │   └── test-pages/
 │   │       ├── login.html
 │   │       ├── index.html
-│   │       ├── produtos.html
+│   │       ├── produtos.html (filmes em cartaz)
 │   │       └── busca.html
 │   └── support/
 │       ├── step_definitions/
@@ -30,9 +30,75 @@ Este projeto contém testes BDD (Behavior-Driven Development) usando Cucumber e 
 
 ## Instalação
 
+### Pré-requisitos
+
+- **Node.js** (versão 14 ou superior)
+- **npm** (geralmente vem com o Node.js)
+
+### Instalação do Cypress e Dependências
+
+1. Clone o repositório ou navegue até a pasta do projeto
+
+2. Instale as dependências do projeto:
+
 ```bash
 npm install
 ```
+
+Isso instalará automaticamente:
+- **Cypress** - Framework de testes end-to-end
+- **@badeball/cypress-cucumber-preprocessor** - Integração Cucumber com Cypress
+- Todas as outras dependências necessárias
+
+3. Verifique se o Cypress foi instalado corretamente:
+
+```bash
+npx cypress verify
+```
+
+### Primeira Execução
+
+Na primeira vez que você executar o Cypress, ele pode baixar o binário do Cypress automaticamente. Isso é normal e acontece apenas uma vez.
+
+### Solução de Problemas
+
+#### Erro: ENOENT: no such file or directory (arquivos .feature não encontrados)
+
+Se você encontrar um erro indicando que os arquivos `.feature` não foram encontrados, tente as seguintes soluções:
+
+1. **Limpar o cache do Cypress (usando o script):**
+   ```bash
+   npm run cypress:clear
+   ```
+   Ou manualmente:
+   ```bash
+   npx cypress cache clear
+   ```
+
+2. **Limpar o cache do npm e reinstalar (usando o script):**
+   ```bash
+   npm run clean:install
+   ```
+   Ou manualmente:
+   ```bash
+   npm cache clean --force
+   rm -rf node_modules
+   npm install
+   ```
+
+3. **Verificar se os arquivos .feature estão no local correto:**
+   - Os arquivos devem estar em `cypress/e2e/*.feature`
+   - Verifique se os arquivos existem: `cypress/e2e/login.feature`, `cypress/e2e/carrinho.feature`, `cypress/e2e/busca.feature`
+
+4. **Verificar a configuração:**
+   - Certifique-se de que o arquivo `.cucumberrc.json` existe na raiz do projeto
+   - Verifique se o `cypress.config.js` está configurado corretamente
+
+5. **Reinstalar o Cypress:**
+   ```bash
+   npm uninstall cypress
+   npm install cypress --save-dev
+   ```
 
 ## Executar Testes
 
@@ -60,36 +126,36 @@ npm run serve
 
 **Scenario: Login bem-sucedido com credenciais válidas**
 
-- Testa o fluxo completo de login
+- Testa o fluxo completo de login no sistema de ingressos
 - **Credenciais válidas:**
-  - Email: `usuario@exemplo.com`
+  - Email: `cliente@cinema.com`
   - Senha: `senha123`
 - **Nota:** Os campos de email e senha são preenchidos manualmente durante os testes (o teste pausa para permitir entrada manual)
 - Usa: Given, When, Then, And, But
 
-### 2. Carrinho de Compras (carrinho.feature)
+### 2. Carrinho de Ingressos (carrinho.feature)
 
-**Scenario: Adicionar produtos ao carrinho e calcular total**
+**Scenario: Adicionar ingressos ao carrinho e calcular total**
 
-- Testa adicionar produtos ao carrinho
-- Verifica cálculo do total
-- Testa remoção de produtos
-- Valida que produtos corretos permanecem no carrinho
+- Testa adicionar ingressos de filmes ao carrinho
+- Verifica cálculo do total dos ingressos
+- Testa remoção de ingressos
+- Valida que ingressos corretos permanecem no carrinho
 - Usa: Given, When, Then, And, But
 
-### 3. Busca de Produtos (busca.feature)
+### 3. Busca de Filmes (busca.feature)
 
-**Scenario 1: Buscar produto e filtrar resultados**
+**Scenario 1: Buscar filme e filtrar resultados**
 
-- Testa busca de produtos existentes
-- Verifica ordenação por preço
-- Valida que produtos estão ordenados corretamente
+- Testa busca de filmes em cartaz
+- Verifica ordenação por preço do ingresso
+- Valida que filmes estão ordenados corretamente
 - Usa: Given, When, Then, And, But
 
-**Scenario 2: Buscar produto que não existe**
+**Scenario 2: Buscar filme que não existe**
 
-- Testa busca de produto inexistente
-- Verifica exibição da mensagem de erro: "Esse produto não existe"
+- Testa busca de filme que não está em cartaz
+- Verifica exibição da mensagem de erro: "Esse filme não está em cartaz"
 - Usa: Given, When, Then, And, But
 
 ## Step Definitions
@@ -97,17 +163,17 @@ npm run serve
 Todos os step definitions estão implementados em JavaScript na pasta `cypress/support/step_definitions/`:
 
 - **login.steps.js** - Implementa os steps de login (com preenchimento manual)
-- **carrinho.steps.js** - Implementa os steps do carrinho de compras
-- **busca.steps.js** - Implementa os steps de busca de produtos
+- **carrinho.steps.js** - Implementa os steps do carrinho de ingressos
+- **busca.steps.js** - Implementa os steps de busca de filmes
 
 ## Páginas de Teste
 
 As páginas HTML de teste estão localizadas em `cypress/fixtures/test-pages/` e são servidas automaticamente pelo servidor HTTP na porta 8080:
 
-- **login.html** - Página de login com validação de credenciais
+- **login.html** - Página de login do sistema de ingressos com validação de credenciais
 - **index.html** - Página inicial após login bem-sucedido
-- **produtos.html** - Página de produtos com funcionalidade de carrinho
-- **busca.html** - Página de busca com filtros e validação de produtos
+- **produtos.html** - Página de filmes em cartaz com funcionalidade de carrinho de ingressos
+- **busca.html** - Página de busca de filmes com filtros e validação
 
 ## Funcionalidades Especiais
 
@@ -121,12 +187,14 @@ O teste de login foi configurado para permitir preenchimento manual dos campos. 
 4. Você pode preencher manualmente
 5. Clique em "Resume" no Cypress para continuar
 
+**Nota:** Este comportamento funciona melhor no modo interativo (`npm run cypress:open`). No modo headless (`npm run cypress:run`), o teste aguardará o timeout antes de continuar.
+
 ### Validação de Busca
 
-A página de busca valida se o produto existe:
+A página de busca valida se o filme está em cartaz:
 
-- **Produtos disponíveis:** smartphone, smartphone modelo a/b/c/d/e
-- **Produto não encontrado:** Exibe mensagem "Esse produto não existe"
+- **Filmes disponíveis:** vingadores, vingadores: ultimato, vingadores: guerra infinita, vingadores: era de ultron, vingadores: os vingadores, vingadores: endgame
+- **Filme não encontrado:** Exibe mensagem "Esse filme não está em cartaz"
 
 ## Tecnologias Utilizadas
 

@@ -12,13 +12,13 @@ When("eu clico no botão de buscar", () => {
   cy.get('button[type="submit"]').contains("Buscar").click();
 });
 
-Then("eu devo ver uma lista de produtos relacionados", () => {
+Then("eu devo ver uma lista de filmes relacionados", () => {
   cy.get(".product-list").should("be.visible");
   cy.get(".product-item").should("have.length.greaterThan", 0);
 });
 
 Then(
-  "os resultados devem conter pelo menos {string} produtos",
+  "os resultados devem conter pelo menos {string} filmes",
   (quantidade) => {
     cy.get(".product-item").should(
       "have.length.at.least",
@@ -31,7 +31,7 @@ When("eu aplico o filtro {string}", (filtro) => {
   cy.get(".filter-select").select(filtro);
 });
 
-Then("os produtos devem estar ordenados por preço crescente", () => {
+Then("os filmes devem estar ordenados por preço crescente", () => {
   cy.get(".product-item .price").then(($prices) => {
     const prices = Array.from($prices).map((el) => {
       return parseFloat(
@@ -45,7 +45,7 @@ Then("os produtos devem estar ordenados por preço crescente", () => {
   });
 });
 
-Then("o primeiro produto deve ter preço menor que o último", () => {
+Then("o primeiro filme deve ter preço menor que o último", () => {
   cy.get(".product-item .price")
     .first()
     .then(($first) => {
@@ -65,7 +65,7 @@ Then("o primeiro produto deve ter preço menor que o último", () => {
     });
 });
 
-Then("nenhum produto deve estar fora de ordem", () => {
+Then("nenhum filme deve estar fora de ordem", () => {
   cy.get(".product-item .price").then(($prices) => {
     const prices = Array.from($prices).map((el) => {
       return parseFloat(
@@ -76,8 +76,4 @@ Then("nenhum produto deve estar fora de ordem", () => {
     const sortedPrices = [...prices].sort((a, b) => a - b);
     expect(prices).to.deep.equal(sortedPrices);
   });
-});
-
-Then("eu devo ver a mensagem {string}", (mensagem) => {
-  cy.get(".error-message").should("be.visible").and("contain", mensagem);
 });

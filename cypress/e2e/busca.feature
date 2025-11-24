@@ -1,22 +1,22 @@
-Feature: Busca de Produtos
-  Como um usuário
-  Eu quero buscar produtos no site
-  Para encontrar o que preciso
+Feature: Busca de Filmes
+  Como um cliente
+  Eu quero buscar filmes em cartaz
+  Para encontrar o filme que quero assistir
 
-  Scenario: Buscar produto e filtrar resultados
+  Scenario: Buscar filme e filtrar resultados
     Given que estou na página inicial
-    When eu digito "smartphone" no campo de busca
+    When eu digito "vingadores" no campo de busca
     And eu clico no botão de buscar
-    Then eu devo ver uma lista de produtos relacionados
-    And os resultados devem conter pelo menos "5" produtos
+    Then eu devo ver uma lista de filmes relacionados
+    And os resultados devem conter pelo menos "5" filmes
     When eu aplico o filtro "Preço: Menor para Maior"
-    Then os produtos devem estar ordenados por preço crescente
-    And o primeiro produto deve ter preço menor que o último
-    But nenhum produto deve estar fora de ordem
+    Then os filmes devem estar ordenados por preço crescente
+    And o primeiro filme deve ter preço menor que o último
+    But nenhum filme deve estar fora de ordem
 
-  Scenario: Buscar produto que não existe
+  Scenario: Buscar filme que não existe
     Given que estou na página inicial
-    When eu digito "tablet" no campo de busca
+    When eu digito "filme inexistente" no campo de busca
     And eu clico no botão de buscar
-    Then eu devo ver a mensagem "Esse produto não existe"
+    Then eu devo ver a mensagem "Esse filme não está em cartaz"
 

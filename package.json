@@ -7,7 +7,10 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "test": "cypress run",
-    "serve": "npx http-server -p 8080 -c-1"
+    "serve": "npx http-server -p 8080 -c-1",
+    "server": "npx http-server -p 8080 -c-1",
+    "cypress:clear": "cypress cache clear",
+    "clean:install": "npm cache clean --force && rm -rf node_modules && npm install"
   },
   "keywords": [
     "cypress",

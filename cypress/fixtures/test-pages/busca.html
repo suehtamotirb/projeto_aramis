@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Busca</title>
+    <title>Busca de Filmes</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -53,7 +53,7 @@
     </style>
   </head>
   <body>
-    <h1>Busca de Produtos</h1>
+    <h1>Busca de Filmes</h1>
     <form class="search-form" id="searchForm">
       <input type="search" placeholder="Digite o termo de busca..." />
       <button type="submit">Buscar</button>
@@ -66,25 +66,25 @@
     </select>
 
     <div class="product-list" id="productList" style="display: none">
-      <div class="product-item" data-price="500.00">
-        <h3>Smartphone Modelo A</h3>
-        <p class="price">R$ 500,00</p>
+      <div class="product-item" data-price="25.00">
+        <h3>Vingadores: Ultimato</h3>
+        <p class="price">R$ 25,00</p>
       </div>
-      <div class="product-item" data-price="800.00">
-        <h3>Smartphone Modelo B</h3>
-        <p class="price">R$ 800,00</p>
+      <div class="product-item" data-price="28.00">
+        <h3>Vingadores: Guerra Infinita</h3>
+        <p class="price">R$ 28,00</p>
       </div>
-      <div class="product-item" data-price="1200.00">
-        <h3>Smartphone Modelo C</h3>
-        <p class="price">R$ 1.200,00</p>
+      <div class="product-item" data-price="30.00">
+        <h3>Vingadores: Era de Ultron</h3>
+        <p class="price">R$ 30,00</p>
       </div>
-      <div class="product-item" data-price="1500.00">
-        <h3>Smartphone Modelo D</h3>
-        <p class="price">R$ 1.500,00</p>
+      <div class="product-item" data-price="32.00">
+        <h3>Vingadores: Os Vingadores</h3>
+        <p class="price">R$ 32,00</p>
       </div>
-      <div class="product-item" data-price="2000.00">
-        <h3>Smartphone Modelo E</h3>
-        <p class="price">R$ 2.000,00</p>
+      <div class="product-item" data-price="35.00">
+        <h3>Vingadores: Endgame</h3>
+        <p class="price">R$ 35,00</p>
       </div>
     </div>
 
@@ -93,14 +93,14 @@
     </div>
 
     <script>
-      // Lista de produtos disponíveis
-      const produtosDisponiveis = [
-        "smartphone",
-        "smartphone modelo a",
-        "smartphone modelo b",
-        "smartphone modelo c",
-        "smartphone modelo d",
-        "smartphone modelo e",
+      // Lista de filmes disponíveis
+      const filmesDisponiveis = [
+        "vingadores",
+        "vingadores: ultimato",
+        "vingadores: guerra infinita",
+        "vingadores: era de ultron",
+        "vingadores: os vingadores",
+        "vingadores: endgame",
       ];
 
       document
@@ -120,16 +120,16 @@
           noResults.style.display = "none";
 
           // Verificar se o termo de busca existe na lista
-          const produtoEncontrado = produtosDisponiveis.some((produto) =>
-            produto.includes(termoBusca)
+          const filmeEncontrado = filmesDisponiveis.some((filme) =>
+            filme.includes(termoBusca)
           );
 
-          if (produtoEncontrado) {
-            // Mostrar lista de produtos
+          if (filmeEncontrado) {
+            // Mostrar lista de filmes
             productList.style.display = "block";
           } else {
             // Mostrar mensagem de erro
-            errorMessage.textContent = "Esse produto não existe";
+            errorMessage.textContent = "Esse filme não está em cartaz";
             noResults.style.display = "block";
           }
         });

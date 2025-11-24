@@ -15,9 +15,7 @@ let server;
 module.exports = defineConfig({
   e2e: {
     async setupNodeEvents(on, config) {
-      await addCucumberPreprocessorPlugin(on, config, {
-        stepDefinitions: "cypress/support/step_definitions/**/*.js",
-      });
+      await addCucumberPreprocessorPlugin(on, config);
 
       on(
         "file:preprocessor",
@@ -26,12 +24,17 @@ module.exports = defineConfig({
         })
       );
 
-      // Iniciar servidor HTTP imediatamente (para modo interativo)
-      // Isso evita o aviso de baseUrl não encontrado
+      // Iniciar servidor HTTP imediatamente no setupNodeEvents
+      // Isso garante que o servidor esteja rodando antes do Cypress verificar o baseUrl
       await startServer();
 
-      // Iniciar servidor HTTP antes dos testes (para modo run)
+      // Iniciar servidor HTTP antes dos testes (para modo run) - fallback
       on("before:run", async () => {
+        await startServer();
+      });
+
+      // Iniciar servidor HTTP antes de cada spec (para modo interativo) - fallback
+      on("before:spec", async () => {
         await startServer();
       });
 
@@ -118,7 +121,18 @@ function startServer() {
 
     server.listen(8080, "127.0.0.1", () => {
       console.log("Servidor HTTP iniciado na porta 8080");
-      resolve();
+      // Verificar se o servidor está respondendo antes de resolver
+      const checkServer = () => {
+        const testReq = http.get("http://127.0.0.1:8080/", (res) => {
+          resolve();
+        });
+        testReq.on("error", () => {
+          // Se ainda não estiver pronto, tentar novamente após um pequeno delay
+          setTimeout(checkServer, 50);
+        });
+      };
+      // Dar um pequeno delay antes de verificar
+      setTimeout(checkServer, 100);
     });
   });
 }
