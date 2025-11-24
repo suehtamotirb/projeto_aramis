@@ -56,6 +56,12 @@ Isso instalará automaticamente:
 npx cypress verify
 ```
 
+4. Caso não tenha sido instalado, instale o cypress:
+
+```bash
+npx cypress install
+```
+
 ### Primeira Execução
 
 Na primeira vez que você executar o Cypress, ele pode baixar o binário do Cypress automaticamente. Isso é normal e acontece apenas uma vez.
